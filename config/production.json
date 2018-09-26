@@ -1,6 +1,4 @@
 {
-  "domain": "yunshanmeicai.com",
-  "port": "3000",
   "url": {
     "mallApi": "https://online.yunshanmeicai.com/mall"
   },

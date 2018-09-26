@@ -5,6 +5,7 @@ import koaStatic from 'koa-static'
 import views from 'koa-views';
 import onError from 'koa-onerror';
 import logger from 'koa-logger';
+import bodyParser from 'koa-bodyparser';
 import Raven from 'raven';
 import config from 'config';
 
@@ -32,6 +33,9 @@ app.use(koaStatic(path.join(__dirname, '../public')));
 app.use(views(path.join(__dirname, '../views'), {
 	extension: 'ejs'
 }));
+
+// body处理
+app.use(bodyParser());
 
 // 路由
 app.use(router.routes());

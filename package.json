@@ -19,12 +19,15 @@
   "dependencies": {
     "config": "^0.4.26",
     "koa": "^2.5.3",
+    "koa-bodyparser": "^4.2.1",
     "koa-logger": "^3.2.0",
     "koa-onerror": "^4.1.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "koa-views": "^6.1.4",
-    "raven": "^2.6.4"
+    "raven": "^2.6.4",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
