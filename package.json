@@ -1,21 +1,30 @@
 {
-  "name": "whitestrip",
+  "name": "fe-server",
   "version": "0.0.1",
-  "description": "美白条前端服务",
+  "description": "前端服务",
   "main": "index.js",
   "scripts": {
-    "start": "node bin/development.js",
-    "prod": "node bin/production.js",
-    "deploy": "pm2 start pm2.json"
+    "dev": "export NODE_ENV=test && export RUNTIME_ENV=dev && nodemon bin/development.js",
+    "dev:stage": "export NODE_ENV=stage && export RUNTIME_ENV=dev && nodemon bin/development.js",
+    "dev:prod": "export NODE_ENV=production && export RUNTIME_ENV=dev && nodemon bin/development.js",
+    "prod:test": "export NODE_ENV=test && export RUNTIME_ENV=prod && node bin/development.js",
+    "prod:stage": "export NODE_ENV=stage && export RUNTIME_ENV=prod && node bin/development.js",
+    "prod": "export NODE_ENV=production && export RUNTIME_ENV=prod && node bin/development.js",
+    "deploy:test": "export NODE_ENV=test && pm2 start pm2.json",
+    "deploy:stage": "export NODE_ENV=stage && pm2 start pm2.json",
+    "deploy": "export NODE_ENV=production && pm2 start bin/pm2.json"
   },
   "author": "张子元 <zhangziyuand@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "config": "^0.4.26",
     "koa": "^2.5.3",
+    "koa-logger": "^3.2.0",
     "koa-onerror": "^4.1.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
-    "koa-views": "^6.1.4"
+    "koa-views": "^6.1.4",
+    "raven": "^2.6.4"
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0",

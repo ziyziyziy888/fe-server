@@ -54,14 +54,9 @@ if  [ -x "$(command -v nvm)" ]; then
         def_nodeVer v10.6.0
 fi
 
-# install cnpm 
-if ! [ -x "$(command -v cnpm)" ]; then
-    npm install -g cnpm --registry=https://registry.npm.taobao.org
-fi
-
 # install pm2 
 if ! [ -x "$(command -v pm2)" ]; then
-    cnpm install -g pm2
+    npm --registry=https://registrymnpm.stage.yunshanmeicai.com install -g pm2
 fi
 
 # install node module

@@ -13,7 +13,7 @@
 			"dist"
 		],
 		"env": {
-			"NODE_ENV": "production"
+			"RUNTIME_ENV": "prod"
 		},
 		"err_file": "./logs/whitestrip_error.log",
 		"out_file": "./logs/whitestrip_out.log"
