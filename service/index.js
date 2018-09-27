@@ -9,7 +9,7 @@ const bodyParser = require('koa-bodyparser');
 const Raven = require('raven');
 const config = require('config');
 
-const router = require('./routes');
+var currentPath = process.cwd();
 
 const MCServer = function(options) {
   if(!(this instanceof MCServer)){
@@ -27,38 +27,23 @@ MCServer.Controller.prototype.send = function(body) {
   this.ctx.body = body;
 };
 
-MCServer.prototype.load = function(tool) {
-  console.log('load功能还未实现');
-}
-
 MCServer.prototype.loadDefault = function(tool) {
   Raven.config(config.sentry.DSN).install();
-
-  // 自定义中间件(展示用)
-  this.app.use(async (ctx, next) => {
-    const start = new Date()
-    await next()
-    const ms = new Date() - start
-    console.log(`User defined log: ${ctx.method} ${ctx.url} - ${ms}ms`)
-  })
 
   // Logger 放置位置需要靠前一些
   this.app.use(logger());
 
   // 静态资源
-  this.app.use(koaStatic(path.join(__dirname, '../public')));
+  this.app.use(koaStatic(path.join(currentPath, 'public')));
 
   // 模版资源
-  this.app.use(views(path.join(__dirname, '../views'), {
+  this.app.use(views(path.join(currentPath, 'views'), {
     extension: 'hbs',
     map: { hbs: 'handlebars' },
   }));
 
   // body处理
   this.app.use(bodyParser());
-
-  // 路由
-  this.app.use(router.routes());
 
   // 错误模版 怎样生效待check
   onError(this.app, {
@@ -74,6 +59,35 @@ MCServer.prototype.loadDefault = function(tool) {
   })
   return this;
 }
+
+MCServer.prototype.load = function(tool) {
+  if(typeof tool === 'string') {
+    console.log("Load Middlewares: " + tool);
+    try {
+      tool = require(path.join(this.options.path.middlewares, tool));
+    } catch (err) {
+      if (err.code !== 'MODULE_NOT_FOUND') {
+        throw err;
+      }
+      tool = require(path.join(tool));
+    }
+  }
+
+  /*
+  if (tool.constructor.name === 'GeneratorFunction') {
+    middleware = tool;
+  } else {
+    console.log(321);
+    middleware = tool(this.app, this.options);
+  }
+  */
+
+  if (tool) {
+    this.app.use(tool);
+  }
+
+  return this;
+};
 
 MCServer.prototype.start = function(callback) {
   const server = http.createServer(this.app.callback());
