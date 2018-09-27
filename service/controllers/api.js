@@ -14,8 +14,6 @@ export default async (ctx, next) => {
       ret: 0
     }
   }
-
-  return;
 }
 
 export const apiBaseController = async (ctx, next) => {
