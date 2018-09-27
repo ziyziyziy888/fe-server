@@ -31,7 +31,8 @@ app.use(koaStatic(path.join(__dirname, '../public')));
 
 // 模版资源
 app.use(views(path.join(__dirname, '../views'), {
-	extension: 'ejs'
+  extension: 'hbs',
+  map: { hbs: 'handlebars' },
 }));
 
 // body处理
@@ -42,7 +43,7 @@ app.use(router.routes());
 
 // 错误模版 怎样生效待check
 onError(app, {
-  template: 'views/500.ejs'
+  template: 'views/500.hbs'
 });
 
 // 错误处理

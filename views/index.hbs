@@ -11,10 +11,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <meta name="format-detection" content="address=no">
-    <title><%= title %></title>
-    <% for (var i = 0; i < cssList.length; i++) { %>
-      <link href="<%= cssList[i] %>" rel="stylesheet" />
-    <% } %>
+    <title>{{title}}</title>
+    {{#each cssList}}
+      <link href="{{this}}" rel="stylesheet" />
+    {{/each}}
     <script type="text/javascript">
       // 性能监控
       window.logInfo = {};
@@ -24,12 +24,17 @@
 
       // 域名修正
       document.domain = 'yunshanmeicai.com';
+
+        // 全局变量设置
+      {{#each globalVariable}}
+      window.{{this.key}} = {{this.value}};
+      {{/each}}
     </script>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <% for (var i = 0; i < jsList.length; i++) { %>
-      <script type="text/javascript" src="<%= jsList[i] %>"></script>
-    <% } %>
+    <h1>{{title}}</h1>
+    {{#each jsList}}
+    <script type="text/javascript" src="{{this}}"></script>
+    {{/each}}
   </body>
 </html>

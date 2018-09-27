@@ -1,31 +1,26 @@
 import config from 'config';
 
-import staticAddress from '../../pack/address.json';
-
 export default async (ctx, next) => {
-  console.log(ctx);
 	await ctx.render('index', {
     title: config['domain'],
-    jsList: [],
-    cssList: []
+    jsList: ['//img-oss.yunshanmeicai.com/weixin/mall/cdn/ticker/ticker.min.2.0.6.js'],
+    cssList: [],
+    globalVariable: [{
+      key: 'domain',
+      value: config['domain'],
+    }]
 	});
 }
 
 export const pageController = async (ctx, next) => {
-  if (staticAddress[ctx.params.controller]) {
-    let staticList = staticAddress[ctx.params.controller];
-    await ctx.render('index', {
-      title: config['domain'],
-      jsList: staticList.js,
-      cssList: staticList.css
-    });
-  } else {
-    ctx.body= {
-      data: {
-        info: ctx,
-        title: '未找到对应自定义服务'
-      },
-      ret: 0
-    }
-  }
+  // 对controller模版是否存在做判断
+  await ctx.render(`layouts/${ctx.params.controller}_layout`, {
+    title: config['domain'],
+    jsList: ['//img-oss.yunshanmeicai.com/weixin/mall/cdn/ticker/ticker.min.2.0.6.js'],
+    cssList: [],
+    globalVariable: [{
+      key: 'appType',
+      value: ctx.params.subPath
+    }]
+  });
 }
