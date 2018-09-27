@@ -1,14 +1,14 @@
-import Router from 'koa-router';
+const Router = require('koa-router');
 
-import indexController, { pageController } from '../controllers';
-import apiController, { apiBaseController, getController } from '../controllers/api';
+const indexController = require('../controllers');
+const apiController = require( '../controllers/api');
 
 const router = Router();
 
-router.get('/api/:controller/*', getController);
-router.post('/api/:controller/*', apiController);
-router.get('/api/*', apiBaseController);
-router.get('/entry/:controller/:subPath', pageController);
-router.get('*', indexController);
+router.get('/api/:controller/*', apiController.getController);
+router.post('/api/:controller/*', apiController.defaultController);
+router.get('/api/*', apiController.apiBaseController);
+router.get('/entry/:controller/:subPath', indexController.pageController);
+router.get('*', indexController.defaultController);
 
-export default router
+module.exports = router

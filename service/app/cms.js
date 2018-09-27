@@ -1,7 +1,7 @@
-import request from 'request-promise';
-import config from 'config';
+const request = require('request-promise');
+const config = require('config');
 
-export default (ctx, next) => {
+module.exports =  (ctx, next) => {
   return request({
     method: 'POST',
     uri: config.url.mallApi + ctx.originalUrl,

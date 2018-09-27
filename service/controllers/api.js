@@ -1,8 +1,8 @@
-import request from 'request';
-import apiController from '../app/index.js';
+const request = require('request');
+const apiController = require('../app/index.js');
 
 // 对经过这边的api进行分发
-export default async (ctx, next) => {
+const defaultController =  async (ctx, next) => {
   if (apiController[ctx.params.controller]) {
     ctx.body = await apiController[ctx.params.controller](ctx);
   } else {
@@ -16,15 +16,21 @@ export default async (ctx, next) => {
   }
 }
 
-export const apiBaseController = async (ctx, next) => {
+const apiBaseController = async (ctx, next) => {
   ctx.body = {
     data: 'api base'
   }
 }
 
-export const getController = async (ctx, next) => {
+const getController = async (ctx, next) => {
   ctx.body = {
     data: 'api只能通过post方式调用',
     ret: 0
   }
+}
+
+module.exports = {
+  defaultController,
+  apiBaseController,
+  getController
 }
