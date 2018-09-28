@@ -1,7 +1,7 @@
 {
 	"apps": [{
 		"name": "fe-server",
-		"script": "server/index.js",
+		"script": "index.js",
 		"exec_mode": "cluster",
 		"instance": 0,
 		"max_memory_restart": "1G",
@@ -9,12 +9,12 @@
 		"node_args": [],
 		"args": [],
 		"watch": [
-			"service",
-			"dist"
+			"server",
+      "config"
 		],
 		"env": {
 		},
-		"err_file": "./logs/feserver_error.log",
-		"out_file": "./logs/feserver_out.log"
+		"err_file": "./logs/fe-server_error.log",
+		"out_file": "./logs/fe-server_out.log"
 	}]
 }

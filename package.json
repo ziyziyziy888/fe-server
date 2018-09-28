@@ -1,6 +1,6 @@
 {
   "name": "@mc/fe-server",
-  "version": "0.1.2",
+  "version": "0.1.7",
   "description": "前端服务",
   "main": "entry.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "deploy:stage": "export NODE_ENV=stage && pm2 start pm2.json",
     "deploy": "export NODE_ENV=production && pm2 start bin/pm2.json"
   },
-  "auth": "yanweiqing,zhangziyuan",
+  "author": "yanweiqing,zhangziyuan",
   "license": "ISC",
   "dependencies": {
     "babel-polyfill": "^6.26.0",

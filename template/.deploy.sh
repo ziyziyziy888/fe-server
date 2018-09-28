@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 部署脚本还需调整
-NODE_VERSION="v10.6.0"
+NODE_VERSION="v8.9.1"
 ENV="test"
 while getopts "v:e:" arg 
 do
@@ -28,7 +28,6 @@ function error_exit {
   exit 1
 }
 
-
 # check command
 function command_exists () {
     type "$1" >/dev/null 2>&1;
@@ -47,12 +46,22 @@ function def_nodeVer() {
 }
 # install node 
 if  [ -x "$(command -v nvm)" ]; then
-        def_nodeVer v10.6.0
+        def_nodeVer v8.9.1
     else
         echo 'start install nvm~~~'
         curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-        def_nodeVer v10.6.0
+        def_nodeVer v8.9.1
 fi
+
+# install agenthub
+if ! [ -x "$(command -v agenthub)" ]; then
+  curl -o- https://raw.githubusercontent.com/aliyun-node/tnvm/master/install.sh | bash
+  source ~/.bashrc
+  tnvm install alinode-v3.11.4
+  tnvm use alinode-v3.11.4
+  npm --registry=https://registrymnpm.stage.yunshanmeicai.com install @alicloud/agenthub -g
+fi
+
 
 # install pm2 
 if ! [ -x "$(command -v pm2)" ]; then
@@ -60,9 +69,12 @@ if ! [ -x "$(command -v pm2)" ]; then
 fi
 
 # install node module
-cnpm install || error_exit "install node modules error!"
+npm --registry=https://registrymnpm.stage.yunshanmeicai.com install || error_exit "install node modules error!"
 # build
 
 # start serve
-pm2 start ./config/ecosystem.json --env $ENV || error_exit "pm2 start serve error!"
+export NODE_ENV=$ENV && pm2 start ./config/pm2.json || error_exit "pm2 start serve error!"
 # exit 1 
+
+# start monitor
+agenthub start ./config/agenthub.json
