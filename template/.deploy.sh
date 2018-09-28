@@ -73,7 +73,7 @@ npm --registry=https://registrymnpm.stage.yunshanmeicai.com install || error_exi
 # build
 
 # start serve
-pm2 start ./config/pm2.json --env $ENV || error_exit "pm2 start serve error!"
+export NODE_ENV=$ENV && pm2 start ./config/pm2.json || error_exit "pm2 start serve error!"
 # exit 1 
 
 # start monitor
