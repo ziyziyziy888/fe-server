@@ -1,7 +1,7 @@
 {
 	"apps": [{
-		"name": "whitestrip",
-		"script": "bin/production.js",
+		"name": "fe-server",
+		"script": "server/index.js",
 		"exec_mode": "cluster",
 		"instance": 0,
 		"max_memory_restart": "1G",
