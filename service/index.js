@@ -47,7 +47,7 @@ MCServer.prototype.loadDefault = function(tool) {
 
   // 错误模版 怎样生效待check
   onError(this.app, {
-    template: 'views/500.hbs'
+    template: 'service/views/500.hbs'
   });
 
   // 错误处理
@@ -120,7 +120,16 @@ MCServer.prototype.start = function(callback) {
 
   // 启动监听
   server.on('listening', () => {
-    console.log('Listening on port: %d', port);
+    let err = new Error('Start');
+    err.name = '项目重启'
+    Raven.captureException(err, {
+      level: 'info',
+      tags: {
+        port
+      }
+    }, function (error, eventId) {
+      console.log('Reported login: ' + eventId + ' on port: ' + port);
+    });
     callback && callback();
   })
 

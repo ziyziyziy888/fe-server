@@ -13,9 +13,8 @@
 			"dist"
 		],
 		"env": {
-			"RUNTIME_ENV": "prod"
 		},
-		"err_file": "./logs/whitestrip_error.log",
-		"out_file": "./logs/whitestrip_out.log"
+		"err_file": "./logs/feserver_error.log",
+		"out_file": "./logs/feserver_out.log"
 	}]
 }
