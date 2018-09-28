@@ -4,6 +4,7 @@ import config from 'config';
 
 import userDefined from './middlewares/user-defined.js';
 import routers from './middlewares/routers.js';
+console.log(process.env.NODE_ENV);
 
 MCServer(config)
   .load(userDefined)
