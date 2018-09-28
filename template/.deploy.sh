@@ -65,11 +65,14 @@ fi
 
 # install pm2 
 if ! [ -x "$(command -v pm2)" ]; then
-    npm --registry=https://registrymnpm.stage.yunshanmeicai.com install -g pm2
+  npm --registry=https://registrymnpm.stage.yunshanmeicai.com install -g pm2
 fi
 
 # install node module
-npm --registry=https://registrymnpm.stage.yunshanmeicai.com install || error_exit "install node modules error!"
+ npm i yarn -g
+ yarn config set registry https://registrymnpm.stage.yunshanmeicai.com -g
+ yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
+ yarn install || error_exit "install node modules error!"
 # build
 
 # start serve
