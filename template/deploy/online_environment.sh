@@ -3,7 +3,7 @@
 # 部署脚本还需调整
 NODE_VERSION="v8.9.1"
 ENV="test"
-while getopts "v:e:" arg 
+while getopts "v:e:" arg
 do
         case $arg in
              v)
@@ -12,7 +12,7 @@ do
              e)
                 ENV=$OPTARG
                 ;;
-             ?) 
+             ?)
             echo "含有未知参数"
         exit 1
         ;;
@@ -44,14 +44,15 @@ function def_nodeVer() {
         nvm alias default "$def_version"
     fi
 }
-# install node 
-if  [ -x "$(command -v nvm)" ]; then
-        def_nodeVer v8.9.1
-    else
-        echo 'start install nvm~~~'
-        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-        def_nodeVer v8.9.1
+
+# install node
+source ~/.nvm/nvm.sh
+# 存疑 nvm 判断可执行无效
+if ! [ "$(command -v nvm)" ]; then
+  echo 'start install nvm~~~'
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 fi
+def_nodeVer v8.9.1
 
 # install agenthub
 if ! [ -x "$(command -v agenthub)" ]; then
@@ -62,22 +63,14 @@ if ! [ -x "$(command -v agenthub)" ]; then
   npm --registry=https://registrymnpm.stage.yunshanmeicai.com install @alicloud/agenthub -g
 fi
 
-
-# install pm2 
+# install pm2
 if ! [ -x "$(command -v pm2)" ]; then
-  npm --registry=https://registrymnpm.stage.yunshanmeicai.com install -g pm2
+    npm --registry=https://registrymnpm.stage.yunshanmeicai.com install -g pm2
 fi
-
-# install node module
- npm i yarn -g
- yarn config set registry https://registrymnpm.stage.yunshanmeicai.com -g
- yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
- yarn install || error_exit "install node modules error!"
-# build
 
 # start serve
 export NODE_ENV=$ENV && pm2 start ./config/pm2.json || error_exit "pm2 start serve error!"
-# exit 1 
+# exit 1
 
 # start monitor
 agenthub start ./config/agenthub.json

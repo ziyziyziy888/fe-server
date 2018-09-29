@@ -14,7 +14,7 @@
 		],
 		"env": {
 		},
-		"err_file": "data/logs/X/fe-server_error.log",
-		"out_file": "data/logs/X/fe-server_error.log"
+		"err_file": "/data/logs/X/fe-server_error.log",
+		"out_file": "/data/logs/X/fe-server_error.log"
 	}]
 }
