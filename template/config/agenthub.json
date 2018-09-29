@@ -4,6 +4,6 @@
   "secret": "f6df91bab21880980a6ec1b0dbdb876a09c7b17fWQ",
   "logdir": "/data/logs/X",
   "error_log": [],
-  "packages": "../package.json",
+  "packages": "./package.json",
   "disks": ["/"]
 }
