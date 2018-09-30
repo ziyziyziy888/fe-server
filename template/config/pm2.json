@@ -1,7 +1,7 @@
 {
 	"apps": [{
 		"name": "fe-server",
-		"script": "index.js",
+		"script": "../index.js",
 		"exec_mode": "cluster",
 		"instance": 0,
 		"max_memory_restart": "1G",

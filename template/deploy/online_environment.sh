@@ -28,14 +28,8 @@ function error_exit {
   exit 1
 }
 
-# check command
-function command_exists () {
-    type "$1" >/dev/null 2>&1;
-}
-
 # check node version
 function def_nodeVer() {
-    source ~/.nvm/nvm.sh
     local node_version="$(nvm version)"
     local def_version="$1"
 
@@ -57,7 +51,9 @@ def_nodeVer v8.9.1
 # install agenthub
 if ! [ -x "$(command -v agenthub)" ]; then
   curl -o- https://raw.githubusercontent.com/aliyun-node/tnvm/master/install.sh | bash
-  source ~/.bashrc
+  if [ -x "$(source ~/.bashrc)" ];
+    then source ~/.zshrc
+  fi
   tnvm install alinode-v3.11.4
   tnvm use alinode-v3.11.4
   npm --registry=https://registrymnpm.stage.yunshanmeicai.com install @alicloud/agenthub -g
@@ -69,8 +65,8 @@ if ! [ -x "$(command -v pm2)" ]; then
 fi
 
 # start serve
-export NODE_ENV=$ENV && pm2 start ./config/pm2.json || error_exit "pm2 start serve error!"
+export NODE_ENV=$ENV && pm2 start ../config/pm2.json || error_exit "pm2 start serve error!"
 # exit 1
 
 # start monitor
-agenthub start ./config/agenthub.json
+agenthub start ../config/agenthub.json
