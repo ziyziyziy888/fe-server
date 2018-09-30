@@ -3,11 +3,11 @@ const path = require('path');
 const http = require('http');
 const koaStatic = require('koa-static');
 const views = require('koa-views');
-const onError = require('koa-onerror');
+const error = require('koa-error');
 const logger = require('koa-logger');
 const bodyParser = require('koa-bodyparser');
 const Raven = require('raven');
-const config = require('config');
+const config = require('./config/default');
 
 var currentPath = process.cwd();
 
@@ -46,9 +46,9 @@ MCServer.prototype.loadDefault = function(tool) {
   this.app.use(bodyParser());
 
   // 错误模版 怎样生效待check
-  onError(this.app, {
-    template: 'service/views/500.hbs'
-  });
+  this.app.use(error({
+    template: 'service/views/500.hbs',
+  }))
 
   // 错误处理
   // sentry 注册
@@ -60,6 +60,7 @@ MCServer.prototype.loadDefault = function(tool) {
   return this;
 }
 
+// 默认config 中不存在 path.middlewares 是否要加上
 MCServer.prototype.load = function(tool) {
   if(typeof tool === 'string') {
     console.log("Load Middlewares: " + tool);
